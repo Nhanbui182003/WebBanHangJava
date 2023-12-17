@@ -48,6 +48,11 @@
     <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body class="js">
+	<script type="text/javascript">
+		if (${not empty successMessage}) {
+		    alert("${successMessage}");
+		}
+	</script>
 	<header class="header shop">
 		<%@ include file="header.jsp" %>
 	</header>

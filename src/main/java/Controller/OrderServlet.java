@@ -6,6 +6,7 @@ import Model.BEAN.OrderItemBean;
 import Model.BEAN.ProductBean;
 import Model.BEAN.UserBean;
 import Model.BO.CategoryBO;
+import Model.BO.OrderBO;
 import Model.BO.ProductBO;
 import Model.BO.UserBO;
 import Model.DAO.ProductDAO;
@@ -164,6 +165,7 @@ public class OrderServlet extends HttpServlet {
         if (request.getParameter("checkout")!=null) {
         	CategoryBO categoryBO= new CategoryBO();
         	ProductBO productBO = new ProductBO();
+        	UserBO userBO = new UserBO();
         	
           	List<CategoryBean> listCategory = new ArrayList();   	 
           	listCategory = categoryBO.getAllCategories();
@@ -172,11 +174,29 @@ public class OrderServlet extends HttpServlet {
       	   	List<ProductBean> listProducts = new ArrayList();   	 
       	 	listProducts = productBO.getAllProducts();
       		request.setAttribute("listProducts", listProducts);
+      		
+      		HttpSession session = request.getSession();
+     		int ID_user = (Integer)session.getAttribute("ID_user");
+     		UserBean user = userBO.getUserById(ID_user);
+     		request.setAttribute("user", user);
 
           	RequestDispatcher dispatcher = request.getRequestDispatcher("/checkout.jsp");
   			dispatcher.forward(request, response);
         }
         if (request.getParameter("proceedToCheckout")!=null) {
+        	OrderBO orderBO = new OrderBO();
+        	HttpSession session = request.getSession();
+     		int ID_user = (Integer)session.getAttribute("ID_user");
+        	OrderBean order = (OrderBean)session.getAttribute("order");
+        	order.setUserId(ID_user);
+        	boolean isOrderAdded = orderBO.addOrder(order);
+        	session.removeAttribute("order");
+        	
+    	   if (isOrderAdded) {
+    	        // Thêm thông báo thành công vào request
+    	        request.setAttribute("successMessage", "Payment successful!");
+    	    }
+        	
         	CategoryBO categoryBO= new CategoryBO();
         	ProductBO productBO = new ProductBO();
         	

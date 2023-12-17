@@ -1,3 +1,4 @@
+<%@page import="Model.BEAN.UserBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -83,34 +84,31 @@
 							<!-- Form -->
 								<form class="form" name=f1 method="post" action="OrderServlet">
 								<div class="row">
+								<%
+									UserBean user = (UserBean)request.getAttribute("user");
+								%>
 									<div class="col-lg-6 col-md-6 col-12">
 										<div class="form-group">
-											<label>First Name<span>*</span></label>
-											<input type="text" name="name" placeholder="" required="required">
-										</div>
-									</div>
-									<div class="col-lg-6 col-md-6 col-12">
-										<div class="form-group">
-											<label>Last Name<span>*</span></label>
-											<input type="text" name="name" placeholder="" required="required">
+											<label>Username<span>*</span></label>
+											<input type="text" name="name" placeholder="" required="required" value="<%=user.getUsername() %>">
 										</div>
 									</div>
 									<div class="col-lg-6 col-md-6 col-12">
 										<div class="form-group">
 											<label>Email Address<span>*</span></label>
-											<input type="email" name="email" placeholder="" required="required">
+											<input type="email" name="email" placeholder="" required="required" value="<%=user.getEmail() %>">
 										</div>
 									</div>
 									<div class="col-lg-6 col-md-6 col-12">
 										<div class="form-group">
 											<label>Phone Number<span>*</span></label>
-											<input type="text" name="number" placeholder="" required="required">
+											<input type="text" name="number" placeholder="" required="required" value="<%=user.getPhoneNumber()%>">
 										</div>
 									</div>
 									<div class="col-lg-6 col-md-6 col-12">
 										<div class="form-group">
 											<label>Address<span>*</span></label>
-											<input type="text" name="address" placeholder="" required="required">
+											<input type="text" name="address" placeholder="" required="required" value="<%=user.getEmail()%>"> 
 										</div>
 									</div>
 								</div>

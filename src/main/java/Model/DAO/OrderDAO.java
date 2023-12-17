@@ -1,14 +1,18 @@
 package Model.DAO;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Date;
+import java.sql.Statement;
+import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import Model.BEAN.OrderBean;
+import Model.BEAN.OrderItemBean;
 
 public class OrderDAO {
     private Connection connection;
@@ -36,6 +40,7 @@ public class OrderDAO {
         }
         return order;
     }
+    
 
     // Get all orders
     public List<OrderBean> getAllOrders() {
@@ -49,6 +54,8 @@ public class OrderDAO {
                 order.setUserId(resultSet.getInt("user_id"));
                 order.setOrderDate(resultSet.getDate("order_date"));
                 order.setTotalPrice(resultSet.getDouble("total_price"));
+                
+                
                 orders.add(order);
             }
         } catch (SQLException e) {
@@ -59,13 +66,34 @@ public class OrderDAO {
 
     // Add a new order
     public boolean addOrder(OrderBean order) {
-        String query = "INSERT INTO orders (order_id, user_id, order_date, total_price) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, order.getOrderId());
-            preparedStatement.setInt(2, order.getUserId());
-            preparedStatement.setDate(3, new Date(order.getOrderDate().getTime()));
-            preparedStatement.setDouble(4, order.getTotalPrice());
-            return preparedStatement.executeUpdate() > 0;
+        String query = "INSERT INTO orders (user_id, order_date, total_price) VALUES (?, ?, ?)";
+        String query2 = "INSERT INTO order_items (order_id, product_id, quantity, subtotal) VALUES (?,?,?,?)";
+        try {
+        	PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, order.getUserId());
+            LocalDate currentDate = LocalDate.now();
+            Date sqlDate = Date.valueOf(currentDate);
+            preparedStatement.setDate(2, sqlDate);
+            preparedStatement.setDouble(3, order.getTotalPrice());
+            preparedStatement.executeUpdate();
+
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                int orderId = generatedKeys.getInt(1);
+                order.setOrderId(orderId);
+            }
+            
+	        for (OrderItemBean orderItemBean: order.getListItem()) {
+	        	preparedStatement = connection.prepareStatement(query2);
+	        	preparedStatement.setInt(1, order.getOrderId());
+	        	preparedStatement.setInt(2, orderItemBean.getItem().getProductId());
+	        	preparedStatement.setInt(3, orderItemBean.getQuantity());
+	        	preparedStatement.setDouble(4, orderItemBean.getQuantity()*orderItemBean.getItem().getPriceSale());
+	        	preparedStatement.executeUpdate();
+	        }
+	        return true;
+
+            
         } catch (SQLException e) {
             e.printStackTrace(); // Handle this exception properly in a real application
         }
