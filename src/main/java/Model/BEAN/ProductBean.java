@@ -13,6 +13,7 @@ public class ProductBean {
     private boolean isOnSale;
     private boolean isBestSeller;
     private boolean isTopViewed;
+	private int int1;
     public ProductBean() {
     	
     }
@@ -124,6 +125,11 @@ public class ProductBean {
     public void setisTopViewed(boolean isTopViewed) {
     	this.isTopViewed = isTopViewed;
     }
+
+	public void setCategoryId(int int1) {
+		this.int1 = int1;
+		
+	}
     
     
     

@@ -49,4 +49,12 @@ public class UserBO {
        
         return userDAO.searchUserById(userId);
     }
+    
+    public boolean updateUser(UserBean user) {
+        
+        return userDAO.updateUser(user);
+    }
+    public boolean addUser(UserBean user) {
+    	return userDAO.addUser(user);
+    }
 }

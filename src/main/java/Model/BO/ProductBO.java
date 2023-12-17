@@ -57,4 +57,28 @@ public class ProductBO {
     public void setProductDAO(ProductDAO productDAO) {
         this.productDAO = productDAO;
     }
+    public List<ProductBean> getProductListByPriceRange(String priceRange) {
+    	double minPrice = 0;
+    	double maxPrice = 0;
+    	switch (priceRange) {
+    		case "0-500":
+    			maxPrice = 500;
+    			break;
+    		case "500-700":
+    			minPrice = 500;
+    			maxPrice = 700;
+    			break;
+    		case "700-900":
+    			minPrice = 700;
+    			maxPrice = 900;
+    			break;
+    		case "900-1000":
+    			minPrice = 900;
+    			maxPrice = 1000;
+    			break;
+    	
+    		}
+    			return productDAO.getListProductByPriceRange(minPrice, maxPrice);
+    	}
 }
+

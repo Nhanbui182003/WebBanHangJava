@@ -32,28 +32,32 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title text-center">Register</h5>
-            <form>
+            <form action="UserServlet" method="post">
                 <div class="form-group">
                     <label for="username">Username:</label>
-                    <input type="text" class="form-control" id="username" placeholder="Enter your username">
+                    <input type="text" class="form-control" name="username" placeholder="Enter your username">
+                </div>
+                 <div class="form-group">
+                    <label for="userId">IdUser:</label>
+                    <input type="text" class="form-control" name="userId" placeholder="Enter your username">
                 </div>
                 <div class="form-group">
-                    <label for="username">Email:</label>
-                    <input type="text" class="form-control" id="username" placeholder="ex: a@gmail.com">
+                    <label for="email">Email:</label>
+                    <input type="text" class="form-control" name="email" placeholder="ex: a@gmail.com">
                 </div>
                 <div class="form-group">
-                    <label for="username">Phone number:</label>
-                    <input type="text" class="form-control" id="username" placeholder="ex: 0830138281">
+                    <label for="phoneNumber">Phone number:</label>
+                    <input type="text" class="form-control" name="phoneNumber" placeholder="ex: 0830138281">
                 </div>
                 
                 <div class="form-group">
-                    <label for="username">Address:</label>
-                    <input type="text" class="form-control" id="username" placeholder="123 Nguyen Luong Bang ..">
+                    <label for="address">Address:</label>
+                    <input type="text" class="form-control" name="address" placeholder="123 Nguyen Luong Bang ..">
                 </div>
                 
                  <div class="form-group">
-                    <label for="username">Password:</label>
-                    <input type="password" class="form-control" id="username">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" name="password">
                 </div>
                
                 <input class="form-control btn btn-primary btn-block btn-success" type="submit" name=action value="Register">

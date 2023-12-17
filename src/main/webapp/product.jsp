@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@page import="Model.BEAN.ProductBean"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="zxx">
 <head>
@@ -68,28 +68,46 @@
 					<div class="sidebar_section">
 						<div class="sidebar_title">
 							<h5>Product Category</h5>
+						<div>
+							<ul class="sidebar_categories">
+							<% 
+								ArrayList<CategoryBean> listCategory12 = (ArrayList<CategoryBean>) request.getAttribute("listCategorys");
+								for (CategoryBean cate : listCategory12) { 
+							%>
+								<li>
+									<a href="ProductServlet?IDCategory=<%= cate.getCategoryId() %>">
+										<%= cate.getName() %>
+									</a>
+								</li>
+								<% } %>
+							</ul>
 						</div>
-						<ul class="sidebar_categories">
-							<li><a href="#">Men</a></li>
-							<li class="active"><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>Women</a></li>
-							<li><a href="#">Accessories</a></li>
-							<li><a href="#">New Arrivals</a></li>
-							<li><a href="#">Collection</a></li>
-							<li><a href="#">Shop</a></li>
-						</ul>
 					</div>
+				</div>
+						
 					<hr>
 					<!-- Price Range Filtering -->
 					<div class="sidebar_section">
 						<div class="sidebar_title">
 							<h5>Filter by Price</h5>
+								<div style="margin-bottom: 40px;margin-top: 20px;">
+									<form action="ProductServlet" method="get">
+									<p>
+										<select name="priceRange" id="priceRange" style="display: none;">
+											<option value="0-500">0 - 500</option>
+											<option value="500-700">500 - 700</option>
+											<option value="700-900">700 - 900</option>
+											<option value="900-1000">900 - 1000</option>
+										</select>
+									</p>
+										<div class="filter_button">
+											<button type="submit"><span>Filter</span></button>
+										</div>
+									</form>
+								
+								</div>
+							</div>
 						</div>
-						<p>
-							<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
-						</p>
-						<div id="slider-range"></div>
-						<div class="filter_button"><span>filter</span></div>
-					</div>
 					<hr>
 
 					<!-- Sizes -->
@@ -182,104 +200,41 @@
 								</div>
 
 								<!-- Product Grid -->
-
-								<div class="row row-cols-1 row-cols-md-3 g-4" style="margin-top:20px;">
-								   <div class="col-3" style="margin-top:20px; height:400px" >
-								    <div class="card text-bg-secondary h-100"  >
-								      <img src="images/main.jpg" style=" height: 200px;" class="card-img-top " alt="...">
-								      <div class="card-body" style=" height: 100px;">
-								        <h5 class="card-title">Card title</h5>
-								        <p class="card-text"> This content is a little bit longer.</p>
-								      	
-								      </div>
-								       <div class="btn card-footer">
-									    	Cart
-									  </div>
-								    </div>
-								  </div>
-								   <div class="col-3" style="margin-top:20px; height:400px" >
-								    <div class="card text-bg-secondary h-100"  >
-								      <img src="images/main.jpg" style=" height: 200px;" class="card-img-top " alt="...">
-								      <div class="card-body" style=" height: 100px;">
-								        <h5 class="card-title">Card title</h5>
-								        <p class="card-text"> This content is a little bit longer.</p>
-								      	
-								      </div>
-								       <div class="btn card-footer">
-									    	Cart
-									  </div>
-								    </div>
-								  </div>
-								  <div class="col-3" style="margin-top:20px; height:400px" >
-								    <div class="card text-bg-secondary h-100"  >
-								      <img src="images/main.jpg" style=" height: 200px;" class="card-img-top " alt="...">
-								      <div class="card-body" style=" height: 100px;">
-								        <h5 class="card-title">Card title</h5>
-								        <p class="card-text"> This content is a little bit longer.</p>
-								      	
-								      </div>
-								       <div class="btn card-footer">
-									    	Cart
-									  </div>
-								    </div>
-								  </div>
-								   <div class="col-3" style="margin-top:20px; height:400px" >
-								    <div class="card text-bg-secondary h-100"  >
-								      <img src="images/main.jpg" style=" height: 200px;" class="card-img-top " alt="...">
-								      <div class="card-body" style=" height: 100px;">
-								        <h5 class="card-title">Card title</h5>
-								        <p class="card-text"> This content is a little bit longer.</p>
-								      	
-								      </div>
-								       <div class="btn card-footer">
-									    	Cart
-									  </div>
-								    </div>
-								  </div>
-								   <div class="col-3" style="margin-top:20px; height:400px" >
-								    <div class="card text-bg-secondary h-100"  >
-								      <img src="images/main.jpg" style=" height: 200px;" class="card-img-top " alt="...">
-								      <div class="card-body" style=" height: 100px;">
-								        <h5 class="card-title">Card title</h5>
-								        <p class="card-text"> This content is a little bit longer.</p>
-								      	
-								      </div>
-								       <div class="btn card-footer">
-									    	Cart
-									  </div>
-								    </div>
-								  </div>
-								   <div class="col-3" style="margin-top:20px; height:400px" >
-								    <div class="card text-bg-secondary h-100"  >
-								      <img src="images/main.jpg" style=" height: 200px;" class="card-img-top " alt="...">
-								      <div class="card-body" style=" height: 100px;">
-								        <h5 class="card-title">Card title</h5>
-								        <p class="card-text"> This content is a little bit longer.</p>
-								      	
-								      </div>
-								       <div class="btn card-footer">
-									    	Cart
-									  </div>
-								    </div>
-								  </div>
-								  <div class="col-3" style="margin-top:20px; height:400px" >
-								    <div class="card text-bg-secondary h-100"  >
-								      <img src="images/main.jpg" style=" height: 200px;" class="card-img-top " alt="...">
-								      <div class="card-body" style=" height: 100px;">
-								        <h5 class="card-title">Card title</h5>
-								        <p class="card-text"> This content is a little bit longer.</p>
-								      	
-								      </div>
-								       <div class="btn card-footer">
-									    	Cart
-									  </div>
-								    </div>
-								  </div>
-								  
-								  
-								  
-								  
+								<div class="row">
+								 <% 
+						           	ArrayList<ProductBean> listProduct = (ArrayList<ProductBean>)request.getAttribute("listProductP");
+						            for (ProductBean product : listProduct) {
+										
+						        %>
+							<div class="col-xl-3 col-lg-4 col-md-4 col-12" style="">
+		           								 <div class="single-product">
+		               								<div class="product-img">
+		                    							<a href="ProductServlet?IDProduct=<%= product.getProductId() %>">
+									                        <img class="default-img" src="images/<%= product.getImageUrl() %>" alt="#">
+									                        <img class="hover-img" src="images/<%= product.getImageUrl() %>" alt="#">
+									                    </a>
+									                    <div class="button-head">
+															
+															<div class="product-action-2">
+																<a title="Add to cart" href="OrderServlet?productId=<%=product.getProductId()%>">Add to cart</a>
+															</div>
+														</div>
+													</div>	
+													<div class="product-content">
+														<h3><a href="ProductServlet?productId=<%=product.getProductId()%>"><%=product.getName() %></a></h3>
+														<div class="product-price">
+															<span><%= product.getPriceOriginal() %></span>
+														</div>
+													</div>
+												</div>                        			
+		                        			</div>
+							
+								<% 	     
+						            }
+                        		%> 
+								   			 								  
 								</div>
+								
 								<div class="product_sorting_container product_sorting_container_bottom clearfix" style="margin:30px">
 									<ul class="product_sorting">
 										<li>

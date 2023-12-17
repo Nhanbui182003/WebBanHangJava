@@ -136,9 +136,7 @@ public class ProductDAO {
 
     public List<ProductBean> getListProductByIDCategory(int categoryId) {
         List<ProductBean> productList = new ArrayList<>();
-        String query = "SELECT p.* FROM products p " +
-                       "JOIN product_category pc ON p.product_id = pc.product_id " +
-                       "WHERE pc.category_id = ?";
+        String query = "SELECT * FROM products WHERE category_id = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, categoryId);
@@ -147,13 +145,15 @@ public class ProductDAO {
             while (resultSet.next()) {
                 ProductBean product = new ProductBean();
                 product.setProductId(resultSet.getInt("product_id"));
+                product.setCategoryId(resultSet.getInt("category_id"));
                 product.setName(resultSet.getString("name"));
                 product.setDescription(resultSet.getString("description"));
                 product.setPriceOriginal(resultSet.getDouble("priceOriginal"));
                 product.setPriceSale(resultSet.getDouble("priceSale"));
                 product.setManufacturer(resultSet.getString("manufacturer"));
                 product.setImageUrl(resultSet.getString("image_url"));
-                product.setToptrending(resultSet.getInt("topTrending"));
+                product.setToptrending(resultSet.getInt("toptrending"));
+  
 
                 productList.add(product);
             }
@@ -163,4 +163,31 @@ public class ProductDAO {
 
         return productList;
     }
+    
+    public List<ProductBean> getListProductByPriceRange(double minPrice, double maxPrice) {
+    	List<ProductBean> productList = new ArrayList<>();
+    	String query = "SELECT * FROM products WHERE priceSale BETWEEN ? AND ?";
+    	try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+    	preparedStatement.setDouble(1, minPrice);
+    	preparedStatement.setDouble(2, maxPrice);
+    	ResultSet resultSet = preparedStatement.executeQuery();
+    	while (resultSet.next()) {
+    	ProductBean product = new ProductBean();
+    	product.setProductId(resultSet.getInt("product_id"));
+        product.setCategoryId(resultSet.getInt("category_id"));
+        product.setName(resultSet.getString("name"));
+        product.setDescription(resultSet.getString("description"));
+        product.setPriceOriginal(resultSet.getDouble("priceOriginal"));
+        product.setPriceSale(resultSet.getDouble("priceSale"));
+        product.setManufacturer(resultSet.getString("manufacturer"));
+        product.setImageUrl(resultSet.getString("image_url"));
+        product.setToptrending(resultSet.getInt("toptrending"));
+    	productList.add(product);
+    	}
+    	} catch (SQLException e) {
+    	e.printStackTrace(); // Xử lý ngoại lệ theo yêu cầu
+    	}
+    	return productList;
+    	}
+
 }

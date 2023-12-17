@@ -59,7 +59,7 @@
 						<%
 							int userId = (Integer)session.getAttribute("ID_user");
 						%>
-							<a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+							<a href="UserServlet?user_id=<%= userId%>" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
 						</div>
 						<%
 							OrderBean order = (OrderBean)session.getAttribute("order");

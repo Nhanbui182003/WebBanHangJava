@@ -78,7 +78,7 @@ public class UserDAO {
 
     // Add a new user
     public boolean addUser(UserBean user) {
-        String query = "INSERT INTO users (user_id, username, email, password, address, phone_number) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO users (user_id, username, email, password, address, phone_number, role) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, user.getUserId());
             preparedStatement.setString(2, user.getUsername());
@@ -86,6 +86,7 @@ public class UserDAO {
             preparedStatement.setString(4, user.getPassword());
             preparedStatement.setString(5, user.getAddress());
             preparedStatement.setString(6, user.getPhoneNumber());
+            preparedStatement.setString(7, user.getRole());
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace(); // Handle this exception properly in a real application
@@ -137,6 +138,24 @@ public class UserDAO {
             e.printStackTrace(); 
         }
         return null; 
+    }
+    
+    public boolean updateUser(UserBean user) {
+        String query = "UPDATE users SET username=?, email=?, password=?, address=?, phone_number=? WHERE user_id=?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(2, user.getEmail());
+            preparedStatement.setString(3, user.getPassword());
+            preparedStatement.setString(4, user.getAddress());
+            preparedStatement.setString(5, user.getPhoneNumber());
+            preparedStatement.setInt(6, user.getUserId());
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }
