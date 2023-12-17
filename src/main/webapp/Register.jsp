@@ -66,10 +66,7 @@
                 
                  <input class="form-control btn btn-primary btn-block btn-primary" type="submit" name=action value="Back">
                 
-<!--                 <div style="display: flex; justify-content: space-between; margin-top: 20px">
-                	<button  type="submit" class="btn btn-primary btn-block">Login</button>
-                	<button type="submit"  class="btn btn-primary btn-block" >Register </button>
-                </div> -->
+
                 
             </form>
         </div>

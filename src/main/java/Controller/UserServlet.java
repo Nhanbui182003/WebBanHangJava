@@ -75,6 +75,7 @@ public class UserServlet extends HttpServlet {
     if(request.getParameter("action")!=null) {
     	String action = request.getParameter("action");
     	
+    	
     	int userId = Integer.parseInt(request.getParameter("userId"));
     	String username = request.getParameter("username");
         String email = request.getParameter("email");
@@ -94,10 +95,13 @@ public class UserServlet extends HttpServlet {
             // Handle update failure
             response.getWriter().println("Failed to update user profile");
         }
+    
+      
+    }
+
     }
     
     
   }
     
    
-}
